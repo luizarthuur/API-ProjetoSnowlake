@@ -5,8 +5,8 @@ from schemas.TeamCarouselSchema import TeamCarouselSchema
 
 class NavMainContentSchema(SCBaseModel):
     id: Optional[int]
-    titulo_principal: str
-    conteudo_principal: str
+    nav_main_titulo_principal: str
+    nav_main_subtitulo: str
     team_carousels: List[TeamCarouselSchema] = []
 
 

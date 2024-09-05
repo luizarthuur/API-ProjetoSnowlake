@@ -26,39 +26,37 @@ from models.VideoContentModel import VideoContentModel
 
 from schemas.TeamCarouselSchema import TeamCarouselSchema
 
-
 router = APIRouter()
-
 
 
 # POST Todo o texto do website
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=CompositeSchemas)
 async def post_texto(data: CompositeSchemas, db: AsyncSession = Depends(get_session)):
     address_component = AddressComponentModel(
-        titulo=data.address_component.titulo,
-        endereco_conteudo=data.address_component.endereco_conteudo,
-        telefone_conteudo=data.address_component.telefone_conteudo,
-        email_conteudo=data.address_component.email_conteudo
+        address_component_titulo=data.address_component.address_component_titulo,
+        address_component_endereco_conteudo=data.address_component.address_component_endereco_conteudo,
+        address_component_telefone_conteudo=data.address_component.address_component_telefone_conteudo,
+        address_component_email_conteudo=data.address_component.address_component_email_conteudo
     )
 
     content_section = ContentSectionModel(
-        titulo=data.content_section.titulo,
-        conteudo=data.content_section.conteudo
+        content_section_titulo=data.content_section.content_section_titulo,
+        content_section_conteudo=data.content_section.content_section_conteudo
     )
 
     info_main_content = InfoMainContentModel(
-        titulo_principal=data.info_main_content.titulo_principal,
-        conteudo_principal=data.info_main_content.conteudo_principal
+        info_main_titulo_principal=data.info_main_content.info_main_titulo_principal,
+        info_main_conteudo_principal=data.info_main_content.info_main_conteudo_principal
     )
 
     nav_main_content = NavMainContentModel(
-        titulo_principal=data.nav_main_content.titulo_principal,
-        conteudo_principal=data.nav_main_content.conteudo_principal
+        nav_main_titulo_principal=data.nav_main_content.nav_main_titulo_principal,
+        nav_main_subtitulo=data.nav_main_content.nav_main_subtitulo
     )
 
     video_content = VideoContentModel(
-        titulo=data.video_content.titulo,
-        video_link=data.video_content.video_link
+        video_content_titulo=data.video_content.video_content_titulo,
+        video_content_video_link=data.video_content.video_content_video_link
     )
 
     # Adicionando os componentes e seções
@@ -85,7 +83,7 @@ async def post_texto(data: CompositeSchemas, db: AsyncSession = Depends(get_sess
 
     nav_main_content = await db.execute(
     select(NavMainContentModel)
-    .filter_by(titulo_principal=data.nav_main_content.titulo_principal)
+    .filter_by(nav_main_titulo_principal=data.nav_main_content.nav_main_titulo_principal)
     .order_by(desc(NavMainContentModel.id))  # Substitua 'data_de_criacao' pelo campo de ordenação desejado
 )
 
@@ -98,14 +96,14 @@ async def post_texto(data: CompositeSchemas, db: AsyncSession = Depends(get_sess
     # Agora você pode adicionar os itens do carrossel associando o nav_main_content.id
     for carousel_item in data.team_carousel:
         team_carousel = TeamCarouselModel(
-            titulo=carousel_item.titulo,
-            subtitulo=carousel_item.subtitulo,
-            nome=carousel_item.nome,
-            cargo=carousel_item.cargo,
-            descricao=carousel_item.descricao,
-            link1 = carousel_item.link1,
-            link2 = carousel_item.link2,
-            link3 = carousel_item.link3,
+            card_carousel_titulo=carousel_item.card_carousel_titulo,
+            card_carousel_subtitulo=carousel_item.card_carousel_subtitulo,
+            card_carousel_nome=carousel_item.card_carousel_nome,
+            card_carousel_cargo=carousel_item.card_carousel_cargo,
+            card_carousel_descricao=carousel_item.card_carousel_descricao,
+            card_carousel_link1 = carousel_item.card_carousel_link1,
+            card_carousel_link2 = carousel_item.card_carousel_link2,
+            card_carousel_link3 = carousel_item.card_carousel_link3,
             nav_main_content_id=nav_main_content.id  # Associando com o ID de NavMainContent
         )
         db.add(team_carousel)

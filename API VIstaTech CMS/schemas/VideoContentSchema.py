@@ -4,8 +4,8 @@ from pydantic import BaseModel as SCBaseModel
 
 class VideoContentSchema(SCBaseModel):
     id: Optional[int]
-    titulo: str
-    video_link: str
+    video_content_titulo: str
+    video_content_video_link: str
 
 
     class Config:
