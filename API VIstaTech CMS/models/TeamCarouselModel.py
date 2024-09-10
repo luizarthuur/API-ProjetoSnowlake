@@ -7,10 +7,10 @@ from core.configs import settings
 class TeamCarouselModel(settings.DBBaseModel):
     __tablename__ = 'team_carousel'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    card_carousel_titulo = Column(String(100), nullable=False)
+    card_carousel_titulo = Column(String(100), nullable=True)
     card_carousel_subtitulo = Column(String(100), nullable=True)
-    card_carousel_nome = Column(String(100), nullable=False)
-    card_carousel_cargo = Column(String(100), nullable=False)
+    card_carousel_nome = Column(String(100), nullable=True)
+    card_carousel_cargo = Column(String(100), nullable=True)
     card_carousel_descricao = Column(Text, nullable=True)
     card_carousel_link1 = Column(String(255), nullable=True)
     card_carousel_link2 = Column(String(255), nullable=True)

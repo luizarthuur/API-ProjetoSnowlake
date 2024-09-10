@@ -44,10 +44,10 @@ async def post_texto(data: CompositeSchemas, db: AsyncSession = Depends(get_sess
         content_section_conteudo=data.content_section.content_section_conteudo
     )
 
-    info_main_content = InfoMainContentModel(
-        info_main_titulo_principal=data.info_main_content.info_main_titulo_principal,
-        info_main_conteudo_principal=data.info_main_content.info_main_conteudo_principal
-    )
+    #info_main_content = InfoMainContentModel(
+    #    info_main_titulo_principal=data.info_main_content.info_main_titulo_principal,
+    #    info_main_conteudo_principal=data.info_main_content.info_main_conteudo_principal
+    #)
 
     nav_main_content = NavMainContentModel(
         nav_main_titulo_principal=data.nav_main_content.nav_main_titulo_principal,
@@ -62,7 +62,7 @@ async def post_texto(data: CompositeSchemas, db: AsyncSession = Depends(get_sess
     # Adicionando os componentes e seções
     db.add(address_component)
     db.add(content_section)
-    db.add(info_main_content)
+    #db.add(info_main_content)
     db.add(nav_main_content)
     db.add(video_content)
 
@@ -77,7 +77,7 @@ async def post_texto(data: CompositeSchemas, db: AsyncSession = Depends(get_sess
 
     await db.refresh(address_component)
     await db.refresh(content_section)
-    await db.refresh(info_main_content)
+    #await db.refresh(info_main_content)
     await db.refresh(nav_main_content)
     await db.refresh(video_content)
 
@@ -94,29 +94,29 @@ async def post_texto(data: CompositeSchemas, db: AsyncSession = Depends(get_sess
         raise HTTPException(status_code=404, detail="NavMainContent not found")
 
     # Agora você pode adicionar os itens do carrossel associando o nav_main_content.id
-    for carousel_item in data.team_carousel:
-        team_carousel = TeamCarouselModel(
-            card_carousel_titulo=carousel_item.card_carousel_titulo,
-            card_carousel_subtitulo=carousel_item.card_carousel_subtitulo,
-            card_carousel_nome=carousel_item.card_carousel_nome,
-            card_carousel_cargo=carousel_item.card_carousel_cargo,
-            card_carousel_descricao=carousel_item.card_carousel_descricao,
-            card_carousel_link1 = carousel_item.card_carousel_link1,
-            card_carousel_link2 = carousel_item.card_carousel_link2,
-            card_carousel_link3 = carousel_item.card_carousel_link3,
-            nav_main_content_id=nav_main_content.id  # Associando com o ID de NavMainContent
-        )
-        db.add(team_carousel)
+    #for carousel_item in data.team_carousel:
+    #    team_carousel = TeamCarouselModel(
+    #        card_carousel_titulo=carousel_item.card_carousel_titulo,
+    #        card_carousel_subtitulo=carousel_item.card_carousel_subtitulo,
+    #        card_carousel_nome=carousel_item.card_carousel_nome,
+    #        card_carousel_cargo=carousel_item.card_carousel_cargo,
+    #        card_carousel_descricao=carousel_item.card_carousel_descricao,
+    #        card_carousel_link1 = carousel_item.card_carousel_link1,
+    #        card_carousel_link2 = carousel_item.card_carousel_link2,
+    #        card_carousel_link3 = carousel_item.card_carousel_link3,
+    #        nav_main_content_id=nav_main_content.id  # Associando com o ID de NavMainContent
+    #    )
+    #    db.add(team_carousel)
 
     await db.commit()
 
     return {
         "address_component": address_component,
         "content_section": content_section,
-        "info_main_content": info_main_content,
+        #"info_main_content": info_main_content,
         "nav_main_content": nav_main_content,
         "video_content": video_content,
-        "team_carousel": [carousel_item for carousel_item in data.team_carousel]   
+        #"team_carousel": [carousel_item for carousel_item in data.team_carousel]   
     }
 
 
